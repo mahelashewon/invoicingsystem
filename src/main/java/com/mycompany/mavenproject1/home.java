@@ -101,7 +101,7 @@ public class home extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Customer Details");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 497, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Product Details");
@@ -137,6 +137,7 @@ public class home extends javax.swing.JFrame {
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1124, 6, 83, 86));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

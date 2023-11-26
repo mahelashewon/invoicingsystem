@@ -12,12 +12,22 @@ import java.sql.*;
 public class ConnectionProvider {
     public static Connection getCon()
     {
-        try{
-            Class.forName("com.mysql.connecter.Driver");
-            Connection con=Driver.Manager.getConnection("connector.mysql://localhost:3306");
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/invsys","root","Amount@071");
+            return con;
         }
         catch(Exception e)
-        {}
+        {
+            return null;
+        }
+    }
+    
+    
+    public static void main(String[] args) {
+        Connection con = getCon();
+        System.out.println(con);
     }
     
 }

@@ -16,6 +16,13 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,10 +32,10 @@
     </properties>
     
     <build>
-    <resources>
-        <resource>
-            <directory>src/main/java</directory>
-        </resource>
-     </resources>
-</build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
 </project>

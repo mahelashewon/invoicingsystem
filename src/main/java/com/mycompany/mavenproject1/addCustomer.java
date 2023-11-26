@@ -6,6 +6,14 @@ package com.mycompany.mavenproject1;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import newProject.ConnectionProvider;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -131,6 +139,11 @@ public class addCustomer extends javax.swing.JFrame {
                 jTextField3FocusLost(evt);
             }
         });
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(153, 153, 153));
@@ -141,6 +154,11 @@ public class addCustomer extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField4FocusLost(evt);
+            }
+        });
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
             }
         });
 
@@ -174,6 +192,11 @@ public class addCustomer extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/Resources/save.png"))); // NOI18N
         jButton2.setText("Save");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/Resources/reset.png"))); // NOI18N
@@ -287,6 +310,7 @@ public class addCustomer extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -355,7 +379,7 @@ public class addCustomer extends javax.swing.JFrame {
 
     private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
         // TODO add your handling code here:
-        if(jTextField3.getText().equals(""));
+        if(jTextField3.getText().equals(""))
         {
             jTextField3.setText("Email Address");
             jTextField3.setForeground(new Color(153,153,153));
@@ -416,6 +440,52 @@ public class addCustomer extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int idNo = Integer.parseInt(jTextField1.getText());
+        String name = jTextField2.getText();
+        String email = jTextField3.getText();
+        String address = jTextField4.getText();
+        String contactNumber = jTextField5.getText();
+        Date dateofBirth = jDateChooser1.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sqlDatetimeString = sdf.format(dateofBirth);
+        String gender = (String)jComboBox1.getSelectedItem();
+        
+        
+        
+        System.out.println(idNo);
+        System.out.println(name);
+        System.out.println(email);
+        System.out.println(address);
+        System.out.println(contactNumber);
+        System.out.println(sqlDatetimeString);
+        System.out.println(gender);
+        
+        
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st=con.createStatement();
+            st.executeUpdate("insert into customer values('"+idNo+"','"+name+"','"+email+"','"+address+"','"+contactNumber+"','"+sqlDatetimeString+"','"+gender+"')");
+            JOptionPane.showMessageDialog(null, "Successfully Updated");
+            setVisible(false);
+            new addCustomer().setVisible(true);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Unsuccessful Attempt");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
