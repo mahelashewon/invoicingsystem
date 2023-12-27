@@ -9,7 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import java.sql.*;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import newProject.ConnectionProvider;
 
 /**
@@ -23,6 +26,8 @@ public class searchCustomer extends javax.swing.JFrame {
      */
     public searchCustomer() {
         initComponents();
+        
+        tableLoad();
     }
 
     /**
@@ -166,18 +171,19 @@ public class searchCustomer extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        try{
-            Connection con = ConnectionProvider.getCon();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from customer");
-            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-            
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
-            e.printStackTrace();
-        }
+//        try{
+//            Connection con = ConnectionProvider.getCon();
+//            Statement st = con.createStatement();
+//            ResultSet rs = st.executeQuery("select * from customer");
+//            System.out.println(rs);
+////            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+//            
+//        }
+//        catch(Exception e)
+//        {
+//            JOptionPane.showMessageDialog(null, e);
+//            e.printStackTrace();
+//        }
     }//GEN-LAST:event_formComponentShown
 
     /**
@@ -213,6 +219,39 @@ public class searchCustomer extends javax.swing.JFrame {
                 new searchCustomer().setVisible(true);
             }
         });
+    }
+    
+    
+    void tableLoad() {
+
+        TableModel model = jTable1.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) model;
+        dtm.setRowCount(0);
+        
+        
+
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from customer");
+            
+            int i = 1;
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                v.add(rs.getString("idNo"));
+                v.add(rs.getString("name"));
+                
+
+                dtm.addRow(v);
+                i++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
