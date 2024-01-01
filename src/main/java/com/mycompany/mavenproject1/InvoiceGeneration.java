@@ -4,10 +4,19 @@
  */
 package com.mycompany.mavenproject1;
 
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import newProject.ConnectionProvider;
 
 /**
@@ -15,12 +24,19 @@ import newProject.ConnectionProvider;
  * @author Mahela Shewon
  */
 public class InvoiceGeneration extends javax.swing.JFrame {
-
+public int finalTotal = 0;
     /**
      * Creates new form InvoiceGeneration
      */
     public InvoiceGeneration() {
         initComponents();
+        SimpleDateFormat dFormat=new SimpleDateFormat("dd-MM-yyyy");
+        Date date=new Date();
+        jLabel4.setText(dFormat.format(date));
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        jLabel5.setText(dtf.format(now));
     }
 
     /**
@@ -123,6 +139,12 @@ public class InvoiceGeneration extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Product Id");
 
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("Product Name");
 
@@ -157,7 +179,13 @@ public class InvoiceGeneration extends javax.swing.JFrame {
         jLabel18.setText("Total");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setText("Paid Amount");
+        jLabel19.setText("Paid ");
+
+        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField11ActionPerformed(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Balance");
@@ -211,7 +239,7 @@ public class InvoiceGeneration extends javax.swing.JFrame {
                         .addGap(135, 135, 135))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(1003, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -262,7 +290,7 @@ public class InvoiceGeneration extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1)))
@@ -382,6 +410,18 @@ public class InvoiceGeneration extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int price = Integer.parseInt(jTextField7.getText());
+        int quantity = Integer.parseInt(jTextField8.getText());
+        int total= price*quantity;
+        
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.addRow(new Object[]{jTextField6.getText(),jTextField9.getText(),price,quantity,total});
+        finalTotal = finalTotal + total;
+        String finalTotal1 = String.valueOf(finalTotal);
+        jTextField10.setText(finalTotal1);
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
@@ -401,6 +441,53 @@ public class InvoiceGeneration extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String name = jTextField1.getText();
+        String contactNumber = jTextField2.getText();
+        String email = jTextField3.getText();
+        String address = jTextField4.getText();
+        String path = "D:\\AAInvoicingSystempdf";
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+        
+        try{
+            PdfWriter.getInstance(doc, new FileOutputStream(path +""+name+" "+jLabel4.getText()+".pdf"));
+            doc.open();
+            Paragraph paragraph1 = new Paragraph("                              Mahela Lewle(Invoicing System)                               ");
+            doc.add(paragraph1);
+            Paragraph paragraph2 = new Paragraph("Date & Time:"+ jLabel4.getText() + jLabel5.getText()+"\nBuyer Details: \nName:"+name+"\nContact No: "+contactNumber+"\nEmail: "+email+"\nAddress: "+address+"\n\n" );
+            doc.add(paragraph2);
+            PdfPTable tbl = new PdfPTable(5);
+            tbl.addCell("Name");
+            tbl.addCell("Description");
+            tbl.addCell("Rate");
+            tbl.addCell("Quantity");
+            tbl.addCell("Sub Total");
+            for(int i = 0; i < jTable1.getRowCount(); i++)
+            {
+                String n = jTable1.getValueAt(i,0).toString();
+                String d = jTable1.getValueAt(i, 1).toString();
+                String r = jTable1.getValueAt(i, 2).toString();
+                String q = jTable1.getValueAt(i,3).toString();
+                String s = jTable1.getValueAt(i, 4).toString();
+                tbl.addCell(n);
+                tbl.addCell(d);
+                tbl.addCell(r);
+                tbl.addCell(q);
+                tbl.addCell(s);
+                
+            }
+            doc.add(tbl);
+            Paragraph paragraph3 = new Paragraph("\nTotal"+jTextField10.getText()+"\nPaid "+jTextField11.getText()+"\nBalance"+jTextField12.getText()+"\n\n Thank You Visiting! Come Again!!");
+            doc.add(paragraph3);
+            JOptionPane.showMessageDialog(null,"Bill Generated");
+            setVisible(true);
+            new InvoiceGeneration().setVisible(true);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+        doc.close();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -429,6 +516,45 @@ public class InvoiceGeneration extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+        String pId = jTextField5.getText();
+        
+        try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery("select * from product where pId = '"+pId+"'");
+            if(rs.next()){
+                jTextField6.setText(rs.getString(2));
+                jTextField7.setText(rs.getString(3));
+                jTextField8.setText("1");
+                jTextField9.setText(rs.getString(4));
+                
+            }else{
+                jTextField6.setText("");
+                 jTextField7.setText("");
+                  jTextField8.setText("");
+                   jTextField9.setText("");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+            
+        }
+        
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+        // TODO add your handling code here:
+        String paid = jTextField11.getText();
+        int z = Integer.parseInt(paid);
+        finalTotal = z - finalTotal;
+        String finalTotal1 = String.valueOf(finalTotal);
+        jTextField12.setText(finalTotal1);
+        jTextField12.setEditable(false);
+    }//GEN-LAST:event_jTextField11ActionPerformed
 
     /**
      * @param args the command line arguments
