@@ -5,27 +5,28 @@
 package com.mycompany.mavenproject1;
 
 import java.awt.print.PrinterException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
-import java.sql.*;
-import java.util.Vector;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import newProject.ConnectionProvider;
-
+import java.sql.*;
 
 /**
  *
  * @author Mahela Shewon
  */
-public class searchCustomer extends javax.swing.JFrame {
+public class searchProduct extends javax.swing.JFrame {
 
     /**
-     * Creates new form searchCustomer
+     * Creates new form searchProduct
      */
-    public searchCustomer() {
+    public searchProduct() {
         initComponents();
         
         tableLoad();
@@ -50,14 +51,9 @@ public class searchCustomer extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Rockwell", 1, 36)); // NOI18N
-        jLabel1.setText("Customer Detials");
+        jLabel1.setText("Product Details");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/Resources/backward.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -68,14 +64,14 @@ public class searchCustomer extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID No", "Name", "Email ", "Address", "Contact Number", "Date of Birth", "Gender"
+                "Product Id", "Product Name", "Rate", "Description", "Activation"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -107,7 +103,7 @@ public class searchCustomer extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(94, 94, 94)
                         .addComponent(jLabel1)
-                        .addGap(0, 156, Short.MAX_VALUE))
+                        .addGap(0, 192, Short.MAX_VALUE))
                     .addComponent(jSeparator1)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -148,7 +144,7 @@ public class searchCustomer extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new CustomerDetails().setVisible(true);
+        new ProductDetails().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -156,7 +152,7 @@ public class searchCustomer extends javax.swing.JFrame {
             // TODO add your handling code here:
             jTable1.print(JTable.PrintMode.NORMAL);
         } catch (PrinterException ex) {
-            Logger.getLogger(searchCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -164,23 +160,6 @@ public class searchCustomer extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-//        try{
-//            Connection con = ConnectionProvider.getCon();
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("select * from customer");
-//            System.out.println(rs);
-////            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-//            
-//        }
-//        catch(Exception e)
-//        {
-//            JOptionPane.showMessageDialog(null, e);
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
@@ -199,51 +178,49 @@ public class searchCustomer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(searchCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(searchCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(searchCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(searchCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new searchCustomer().setVisible(true);
+                new searchProduct().setVisible(true);
             }
         });
     }
-    
     
     void tableLoad() {
 
         TableModel model = jTable1.getModel();
         DefaultTableModel dtm = (DefaultTableModel) model;
         dtm.setRowCount(0);
-        
-        
+
+
 
         try {
             Connection con = ConnectionProvider.getCon();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from customer");
-            
+            ResultSet rs = st.executeQuery("select * from product");
+
             int i = 1;
             while (rs.next()) {
                 Vector v = new Vector();
 
-                v.add(rs.getString("idNo"));
-                v.add(rs.getString("name"));
-                v.add(rs.getString("email"));
-                v.add(rs.getString("address"));
-                v.add(rs.getString("contactNumber"));
-                v.add(rs.getString("dateofBirth"));
-                v.add(rs.getString("gender"));
-                
-                
+                v.add(rs.getString("pId"));
+                v.add(rs.getString("pName"));
+                v.add(rs.getString("rate"));
+                v.add(rs.getString("description"));
+                v.add(rs.getString("activate"));
+
+
+
 
                 dtm.addRow(v);
                 i++;
@@ -251,10 +228,13 @@ public class searchCustomer extends javax.swing.JFrame {
 
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
 
     }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
