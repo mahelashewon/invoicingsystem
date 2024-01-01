@@ -290,7 +290,7 @@ public class updateProduct extends javax.swing.JFrame {
         try{
             Connection con = ConnectionProvider.getCon();
             Statement st=con.createStatement();
-            st.executeUpdate("update product set pName='"+pName+"','"+rate+"','"+description+"','"+activate+"' where pId ='"+pId+"'");
+            st.executeUpdate("update product set pName='"+pName+"',rate='"+rate+"',description='"+description+"',activate='"+activate+"' where pId ='"+pId+"'");
             JOptionPane.showMessageDialog(null,"Successfully Updated");
             setVisible(false);
             new updateProduct().setVisible(true);
@@ -298,7 +298,9 @@ public class updateProduct extends javax.swing.JFrame {
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

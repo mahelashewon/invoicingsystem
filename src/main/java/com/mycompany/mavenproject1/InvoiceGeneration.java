@@ -127,6 +127,12 @@ public int finalTotal = 0;
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Contact Number");
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Email");
 
@@ -453,7 +459,7 @@ public int finalTotal = 0;
             doc.open();
             Paragraph paragraph1 = new Paragraph("                              Mahela Lewle(Invoicing System)                               ");
             doc.add(paragraph1);
-            Paragraph paragraph2 = new Paragraph("Date & Time:"+ jLabel4.getText() + jLabel5.getText()+"\nBuyer Details: \nName:"+name+"\nContact No: "+contactNumber+"\nEmail: "+email+"\nAddress: "+address+"\n\n" );
+            Paragraph paragraph2 = new Paragraph("Date & Time:"+ jLabel4.getText() + jLabel5.getText()+"\nBuyer Details \nName: "+name+"\nContact No: "+contactNumber+"\nEmail: "+email+"\nAddress: "+address+"\n\n" );
             doc.add(paragraph2);
             PdfPTable tbl = new PdfPTable(5);
             tbl.addCell("Name");
@@ -476,7 +482,7 @@ public int finalTotal = 0;
                 
             }
             doc.add(tbl);
-            Paragraph paragraph3 = new Paragraph("\nTotal"+jTextField10.getText()+"\nPaid "+jTextField11.getText()+"\nBalance"+jTextField12.getText()+"\n\n Thank You Visiting! Come Again!!");
+            Paragraph paragraph3 = new Paragraph("\nTotal: "+jTextField10.getText()+"\nPaid: "+jTextField11.getText()+"\nBalance: "+jTextField12.getText()+"\n\n Thank You Visiting! Come Again!!");
             doc.add(paragraph3);
             JOptionPane.showMessageDialog(null,"Bill Generated");
             setVisible(true);
@@ -555,6 +561,32 @@ public int finalTotal = 0;
         jTextField12.setText(finalTotal1);
         jTextField12.setEditable(false);
     }//GEN-LAST:event_jTextField11ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+        String contactNumber = jTextField2.getText();
+        try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery("select * from customer where contactNumber like '"+contactNumber+"%'");
+            if(rs.next()){
+                jTextField1.setText(rs.getString(2));
+                jTextField2.setText(rs.getString(5));
+                jTextField3.setText(rs.getString(3));
+                jTextField4.setText(rs.getString(4));
+                
+            }else{
+                jTextField1.setText("");
+                 jTextField3.setText("");
+                  jTextField4.setText("");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+            
+        }
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
