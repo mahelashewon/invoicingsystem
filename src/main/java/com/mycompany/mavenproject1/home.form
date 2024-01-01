@@ -34,7 +34,7 @@
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/mycompany/mavenproject1/icons8-billing-machine-96.png"/>
+          <Image iconType="3" name="/com/mycompany/mavenproject1/Resources/icons8-billing-machine-96.png"/>
         </Property>
       </Properties>
       <Events>
@@ -50,7 +50,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/mycompany/mavenproject1/icons8-view-details-96.png"/>
+          <Image iconType="3" name="/com/mycompany/mavenproject1/Resources/icons8-view-details-96.png"/>
         </Property>
       </Properties>
       <Events>
@@ -66,7 +66,7 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/mycompany/mavenproject1/icons8-menu-96.png"/>
+          <Image iconType="3" name="/com/mycompany/mavenproject1/Resources/icons8-customer-96.png"/>
         </Property>
       </Properties>
       <Events>
@@ -82,7 +82,7 @@
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/mycompany/mavenproject1/icons8-admin-96.png"/>
+          <Image iconType="3" name="/icons8-admin-96.png"/>
         </Property>
       </Properties>
       <Events>
